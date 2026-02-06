@@ -17,7 +17,6 @@ public class PromptFeedbackEntity {
     @Column(nullable = false, updatable = false, unique = true, name = "prompt_feedbackMessage")
     private String userFeedbackMessage;
     
-    
     private String aiMessage;
     
 

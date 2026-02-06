@@ -1,5 +1,4 @@
 package com.nycolas.promp.feedback.api.controller;
-
 import com.nycolas.promp.feedback.api.entity.PromptFeedbackEntity;
 import com.nycolas.promp.feedback.api.repository.PromptFeedbackRepository;
 import com.nycolas.promp.feedback.api.service.PromptFeedbackService;
@@ -35,12 +34,9 @@ public class PromptFeedbackController {
     
     @RequestMapping("/error")
     public String errorPage() {
-    	return "OOPS... Deu erro";
+    	return "Unexpected error... or unexisting endpoint";
     }
     
-    public <T> ResponseEntity saveFeedback(){
-    	
-    }
     
  
 }

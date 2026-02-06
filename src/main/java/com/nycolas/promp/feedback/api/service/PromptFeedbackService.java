@@ -19,6 +19,17 @@ public class PromptFeedbackService {
         return rating >=0 && rating <= 10; //return a rating in 0 to 10 range
     }
 
+    public boolean isFeebackValid(PromptFeedbackEntity promptFeedback) {
+    	String userFeedbackMessage = promptFeedback.getUserFeedBackMessage();
+    	return userFeedbackMessage != null && !userFeedbackMessage.isBlank(); //return need to be different of null and blank
+    	}
+    
+    
+    public boolean ensureFeedbackIsUnique(PromptFeedbackEntity promptFeedback, PromptFeedbackEntity promptIdValid) {
+    	String userFeedbackMessage = promptFeedback.getUserFeedBackMessage();
+    	Long promptId = promptIdValid.getPromptId();
+    	
 
-
-}
+    
+     }
+  }
