@@ -3,21 +3,26 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tb_feedbacks")
+
+
 public class PromptFeedbackEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, updatable = false, unique = true, name = "prompt_id")
+    @Column(nullable = false, updatable = false, name = "prompt_id")
     private long promptId;
 
-    @Column(nullable = false, updatable = false, unique = true, name = "prompt_rating")
+    @Column(nullable = false, updatable = false, name = "prompt_rating")
     private int rating = 10;
     
-    @Column(nullable = false, updatable = false, unique = true, name = "prompt_feedbackMessage")
+    @Column(nullable = false, updatable = false, name = "prompt_feedbackMessage")
     private String userFeedbackMessage;
     
     private String aiMessage;
+    
+    @Column(nullable = false, updatable = false, name = "user_id")
+    private Long userId;
     
 
     public PromptFeedbackEntity(){
@@ -69,5 +74,13 @@ public class PromptFeedbackEntity {
     
     public void setAiMessage(String aiMessage) {
     	this.aiMessage = aiMessage;
+    }
+    
+    public Long getUserId() {
+        return userId;
+    }
+    
+    public void setUserId(Long aiMessage) {
+    	this.userId = userId;
     }
 }

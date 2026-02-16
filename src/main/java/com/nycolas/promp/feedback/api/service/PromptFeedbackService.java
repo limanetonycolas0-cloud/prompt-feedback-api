@@ -24,12 +24,13 @@ public class PromptFeedbackService {
     	return userFeedbackMessage != null && !userFeedbackMessage.isBlank(); //return need to be different of null and blank
     	}
     
+    public boolean feedbackExists = PromptFeedbackRepository.reposiexistsPromptIdAndUserId(promptId, userId);
     
-    public boolean ensureFeedbackIsUnique(PromptFeedbackEntity promptFeedback, PromptFeedbackEntity promptIdValid) {
-    	String userFeedbackMessage = promptFeedback.getUserFeedBackMessage();
-    	Long promptId = promptIdValid.getPromptId();
-    	
+}
+
+
 
     
-     }
-  }
+    
+    
+
