@@ -1,39 +1,40 @@
 package com.nycolas.promp.feedback.api.entity;
+import java.time.LocalDateTime;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tb_feedbacks")
-
-
 public class PromptFeedbackEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, updatable = false, name = "prompt_id")
+    @Column(nullable = false)
     private long promptId;
 
-    @Column(nullable = false, updatable = false, name = "prompt_rating")
+    @Column(nullable = false)
     private int rating = 10;
     
-    @Column(nullable = false, updatable = false, name = "prompt_feedbackMessage")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String userFeedbackMessage;
     
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String aiMessage;
     
-    @Column(nullable = false, updatable = false, name = "user_id")
-    private Long userId;
+    @Column(nullable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
     
 
     public PromptFeedbackEntity(){
     }
 
-    public PromptFeedbackEntity(Long id, Long promptId, int rating, String userFeedbackMessage,String aiMessage){
+    public PromptFeedbackEntity(Long id, Long promptId, int rating, String userFeedbackMessage,String aiMessage, LocalDateTime createdAt){
         this.id = id;
         this.promptId = promptId;
         this.rating = rating;
         this.userFeedbackMessage = userFeedbackMessage;
         this.aiMessage = aiMessage;
+        this.createdAt = createdAt;
     }
 
     public Long getId() {
@@ -60,11 +61,11 @@ public class PromptFeedbackEntity {
         this.rating = rating;
     }
     
-    public String getUserFeedBackMessage() {
+    public String getUserFeedbackMessage() {
     	return userFeedbackMessage;
     }
     
-    public void setUserFeedBackMessage(String userFeedbackMessage) {
+    public void setUserFeedbackMessage(String userFeedbackMessage) {
     	this.userFeedbackMessage = userFeedbackMessage;
     }
     
@@ -76,11 +77,11 @@ public class PromptFeedbackEntity {
     	this.aiMessage = aiMessage;
     }
     
-    public Long getUserId() {
-        return userId;
+    public LocalDateTime getCreatedAt() {
+    	return createdAt;
     }
     
-    public void setUserId(Long aiMessage) {
-    	this.userId = userId;
+    public void setCreatedAt(LocalDateTime createdAt) {
+    	this.createdAt = createdAt;
     }
 }

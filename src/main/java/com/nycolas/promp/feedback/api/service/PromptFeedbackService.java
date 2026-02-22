@@ -1,36 +1,59 @@
 package com.nycolas.promp.feedback.api.service;
+import com.nycolas.promp.feedback.api.FeedbackRequest;
+import com.nycolas.promp.feedback.api.FeedbackResponse;
 import com.nycolas.promp.feedback.api.entity.PromptFeedbackEntity;
 import com.nycolas.promp.feedback.api.repository.PromptFeedbackRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service //business logic
 public class PromptFeedbackService {
-    @Autowired
+    
     private final PromptFeedbackRepository repository;
-
-
+    
     public PromptFeedbackService(PromptFeedbackRepository repository){
         this.repository = repository;
     }
 
-    public boolean isRatingValid(PromptFeedbackEntity promptFeedback){
-        int rating = promptFeedback.getRating();
-        return rating >=0 && rating <= 10; //return a rating in 0 to 10 range
+    public FeedbackResponse create(FeedbackRequest request){
+
+        if(request.rating() < 0 || request.rating() > 10){
+            throw new IllegalArgumentException("Rating must be between 0 and 10");
+        }
+
+        if(request.userFeedbackMessage() == null || request.userFeedbackMessage().isBlank()){
+            throw new IllegalArgumentException("Feedback message cannot be empty");
+        }
+
+        PromptFeedbackEntity feedback = new PromptFeedbackEntity();
+        feedback.setPromptId(request.promptId());
+        feedback.setRating(request.rating());
+        feedback.setUserFeedbackMessage(request.userFeedbackMessage());
+        feedback.setAiMessage(request.aiMessage());
+
+        PromptFeedbackEntity saved = repository.save(feedback);
+
+        return new FeedbackResponse(
+                saved.getId(),
+                saved.getPromptId(),
+                saved.getRating(),
+                saved.getUserFeedbackMessage(),
+                saved.getAiMessage(),
+                saved.getCreatedAt()
+        );
     }
 
-    public boolean isFeebackValid(PromptFeedbackEntity promptFeedback) {
-    	String userFeedbackMessage = promptFeedback.getUserFeedBackMessage();
-    	return userFeedbackMessage != null && !userFeedbackMessage.isBlank(); //return need to be different of null and blank
-    	}
-    
-    public boolean feedbackExists = PromptFeedbackRepository.reposiexistsPromptIdAndUserId(promptId, userId);
-    
-}
-
-
-
-    
-    
-    
-
+    public List<FeedbackResponse> getAll(){
+        return repository.findAll()
+                .stream()
+                .map(f -> new FeedbackResponse(
+                        f.getId(),
+                        f.getPromptId(),
+                        f.getRating(),
+                        f.getUserFeedbackMessage(),
+                        f.getAiMessage(),
+                        f.getCreatedAt()
+                ))
+                .toList();
+    }
+  }
